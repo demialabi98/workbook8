@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" />
+    <title>Create</title>
+  </head>
+  <body>
+    <header><a href="index.html">Home</a> <a href="create.html">Add +</a></header>
+    <main>
+      <h1>Add User</h1>
+
+      <form onsubmit="handleSumbit(event);">
+        <label for="name">Name</label>
+        <input type="text" id="name" />
+
+        <label for="username">Username</label>
+        <input type="text" id="username" />
+
+        <label for="email">Email</label>
+        <input type="text" id="email" />
+
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" />
+
+        <label for="company-name">Company Name</label>
+        <input type="text" id="company-name" />
+
+        <button type="submit">Create</button>
+      </form>
+    </main>
+
+    <script>
+      function handleSumbit(event) {
+        console.log(event);
+        event.preventDefault();
+
+        let form = event.target;
+        let formData = new FormData(form);
+        // console.log(formData);
+        // console.log(Object.fromEntries)(formData.entries()));
+
+        fetch("http://localhost:3000/todos", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(todos),
+        })
+          .then(function (response) {
+            console.log(response.status, response.statusText);
+            return response.json();
+          })
+          .then(function (todo) {
+            console.log(todo);
+            window.location("index.html");
+          });
+      }
+    </script>
+  </body>
+</html>

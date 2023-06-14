@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" />
+    <title>Todo</title>
+  </head>
+  <body>
+    <header><nav>
+        <a href="index.html">Home</a>
+        <a href="create.html">Create</a>
+    </nav></header>
+    <main>
+      <h1>Users</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Company Name</th>
+          </tr>
+        </thead>
+        <tbody id="users-tbody"></tbody>
+      </table>
+    </main>
+    <script>
+      "use strict";
+      let todoTbody = document.querySelector("#users-tbody");
+      function fetchUsers() {
+        fetch ("http://localhost:3000/users")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (users) {
+            console.log(users);
+            users.forEach(buildUserTableRow);
+        });
+      }
+      fetchUsers();
+
+      function buildUserTableRow(user) {
+        let row = document.createElement("tr");
+        usersTbody.appendChild(row);
+
+        let nameCell = document.createElement("td")
+        nameCell.innerText = user.name
+        row.appendChild(nameCell);
+
+        let userNameCell = document.createElement("td")
+        userNameCell.innerText = user.username
+        row.appendChild(userNameCell);
+
+        let emailCell = document.createElement("td")
+        emailCell.innerText = user.email
+        row.appendChild(emailCell);
+
+        let phoneCell = document.createElement("td")
+        phoneCell.innerText = user.phone
+        row.appendChild(phoneCell);
+
+        let companyNameCell = document.createElement("td")
+        companyNameCell.innerText = user.company.name
+        row.appendChild(companyNameCell);
+
+      }

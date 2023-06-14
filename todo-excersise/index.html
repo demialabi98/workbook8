@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" />
+    <title>Users</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="add.html">Add +</a>
+      </nav>
+    </header>
+    <main>
+      <h1>To Do's</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <th>User Id</th>
+            <th>Title</th>
+            <th>Completed</th>
+          </tr>
+        </thead>
+        <tbody id="todos-tbody"></tbody>
+      </table>
+    </main>
+    <script>
+      "use strict";
+      let todosTbody = document.querySelector("#todos-tbody");
+      function fetchTodos() {
+        fetch("http://localhost:3000/todos")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (todos) {
+            console.log(todos);
+            todos.forEach(buildTodosTableRow);
+          });
+      }
+      fetchTodos();
+
+      function buildTodosTableRow(todo) {
+        let row = document.createElement("tr");
+        todosTbody.appendChild(row);
+
+        let userIdCell = document.createElement("td");
+        userIdCell.innerText = todo.userId;
+        row.appendChild(userIdCell);
+
+        let titleCell = document.createElement("td");
+        titleCell.innerText = todo.title;
+        row.appendChild(titleCell);
+
+        let completedCell = document.createElement("td");
+        completedCell.innerText = todo.completed;
+        row.appendChild(completedCell);
+      }
+    </script>
+  </body>
+</html>
